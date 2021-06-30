@@ -1,2 +1,1 @@
-# hac
-Human Action Controller
+# Human Action Controller (HAC)
