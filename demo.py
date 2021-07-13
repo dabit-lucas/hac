@@ -34,40 +34,60 @@ if __name__ == "__main__":
     parser.add_argument('-k', '--keep_data', type=str2bool, default="False")
     args = parser.parse_args()
 
-    record_time = 10
+    record_time = 30
 
     CENTER_POS = (481, 558)
     LIFT_POS = (414, 951)
     PUNCH_POS = (476, 951)
     TRAMPLE_POS = (543, 951)
 
-    hac.set_click("lift")
-    hac.set_click("punch")
-    hac.set_click("trample")
-    
-    hac.set_press_and_release("jump", "space")
-    hac.set_press("four", "w")
-    hac.set_press("five", "s")
+    mouse_module = hac.add_module("mouse")
+    movement_module = hac.add_module("roblox_lift_game")
+    hac.set_init_module(mouse_module)
 
-    hac.set_move_to("zero", CENTER_POS)
-    hac.set_move_to_and_click("one", LIFT_POS)
-    hac.set_move_to_and_click("two", PUNCH_POS)
-    hac.set_move_to_and_click("three", TRAMPLE_POS)
+    mouse_module.add_mouse_mapping("mouse_left_down", ["r_five", "r_zero"])
+    mouse_module.add_mouse_mapping("mouse_left_up", "r_five")
+    mouse_module.add_mouse_mapping("mouse_right_down", ["l_five", "l_zero"])
+    mouse_module.add_mouse_mapping("mouse_right_up", "l_five")
+    mouse_module.add_mouse_mapping("right_move_diff", ["r_five", "r_five"])
+    mouse_module.add_mouse_mapping("right_move_diff", ["r_zero", "r_zero"])
+    mouse_module.add_mouse_mapping("left_move_diff", ["l_five", "l_five"])
+    mouse_module.add_mouse_mapping("left_move_diff", ["l_zero", "l_zero"])
 
-    if not args.keep_data:
-        hac.start()
-    
+    mouse_module.add_mouse_mapping("roll_up", "two_index_fingers_up")
+    mouse_module.add_mouse_mapping("roll_down", "two_index_fingers_down")    
+    mouse_module.add_transition(movement_module, "33")
+
+    movement_module.add_key_mapping("w", "walk")
+    movement_module.add_key_mapping("w", "run")
+    movement_module.add_key_mapping("s", "hands_on_hips")
+    movement_module.add_key_mapping("a", "point_left")
+    movement_module.add_key_mapping("d", "point_right")
+    movement_module.add_key_mapping("space", "jump")
+    movement_module.add_key_mapping("skip", "stand")
+    movement_module.add_mouse_mapping("click", "arms_lift")
+    movement_module.add_mouse_mapping("click", "punch")
+    movement_module.add_mouse_mapping("click", "trample")
+    movement_module.add_transition(mouse_module, "lateral_raise")
+
     cap = cv2.VideoCapture(0)
-    factor = 40
+    factor = 60
     width = 16 * factor
     height = 9 * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    csv_path = "C:\\Users\\JAQQ\\Desktop\\HAC\\HAC\\data\\actions\\" + args.dataset + "\\data.csv"
-    image_dir = "C:\\Users\\JAQQ\\Desktop\\HAC\\HAC\\data\\actions\\"  + args.dataset + "\\image"
+    csv_path = "C:\\Users\\JAQQ\\YOLO\\hac\\data\\actions\\" + args.dataset + "\\data.csv"
+    image_dir = "C:\\Users\\JAQQ\\YOLO\\hac\\data\\actions\\"  + args.dataset + "\\image"
 
-    count = 0                                                                                                                                 
+    count = 0                         
+
+    locked = True
+
     while cap.isOpened():
+
+        #if keyboard.is_pressed("k"):
+        #    hac.start()
+
         try:
             s = time.time()
             success, image = cap.read()
@@ -82,23 +102,24 @@ if __name__ == "__main__":
             image.flags.writeable = False
             
             hac.update(image, cap.get(cv2.CAP_PROP_POS_MSEC), keep_data=args.keep_data)
-            hac.hand_tracker.draw_landmarks(image)
-            hac.pose_estimator.draw_landmarks(image)
+            hac.execute()
 
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-            cv2.imshow('MediaPipe Holistic', image)
+            hac.holistic_tracker.draw_landmarks(image)
+            #hac.hand_tracker.draw_landmarks(image)
+            #hac.pose_estimator.draw_landmarks(image)
 
+            cv2.imshow('MediaPipe Holistic', image)
+            cv2.moveWindow('MediaPipe Holistic', 940, 460)
+            
             e = time.time()
             #print("FPS:", 1/(e-s))
 
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
-            if keyboard.is_pressed("k"):
-                hac.save(csv_path, image_dir)
-            
             if record:
                 if t is None:                
                     t = threading.Thread(target=timer, daemon=True, args=(record_time,))

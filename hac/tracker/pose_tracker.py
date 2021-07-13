@@ -1,54 +1,17 @@
 import mediapipe as mp
 import pandas as pd
 from google.protobuf.json_format import MessageToDict
+from ..utils.key_points import W_LIST_POSE, W2I_POSE, W_LIST_LEFT_HAND, W2I_LEFT_HAND, W_LIST_RIGHT_HAND, W2I_RIGHT_HAND
 
-class PoseEstimator:
+class PoseTracker:
     
-    W_LIST_POSE = [
-        "n", 
-        "lei", 
-        "le", 
-        "leo", 
-        "rei",
-        "re",
-        "reo",
-        "lea",
-        "rea",
-        "ml",
-        "mr",
-        "ls",
-        "rs",
-        "lel",
-        "rel",
-        "lw",
-        "rw",
-        "lp",
-        "rp",
-        "li",
-        "ri",
-        "lt",
-        "rt",
-        "lh",
-        "rh",
-        "lk",
-        "rk",
-        "la",
-        "ra",
-        "lhe",
-        "rhe",
-        "lf",
-        "rf"
-    ]
-
-    W2I_POSE = {v: k for k, v in enumerate(W_LIST_POSE)}
-
     def __init__(self):
         self.mp_pose = mp.solutions.pose
         self.pose = self.mp_pose.Pose(min_detection_confidence=0.5,
                                       min_tracking_confidence=0.5)
         self.mp_drawing = mp.solutions.drawing_utils
         self.results_pose = None
-        self.target_columns = [key + "_x" for key in self.W_LIST_POSE] + [key + "_y" for key in self.W_LIST_POSE]
+        self.target_columns = [key + "_x" for key in W_LIST_POSE] + [key + "_y" for key in W_LIST_POSE]
     
     def __call__(self, image, ts):
         """
@@ -60,21 +23,13 @@ class PoseEstimator:
 
         self.results_pose = self.pose.process(image)
         keypoints_dict = self.pred_to_dict(self.results_pose, ts)
-
-        # no target column
-        try:
-            pose_skeleton = self.dict_to_data(keypoints_dict)
-        except Exception as e:
-            #traceback.print_exc()
-            return None
+        pose_skeleton = self.dict_to_data(keypoints_dict)
 
         return pose_skeleton
 
     def dict_to_data(self, keypoints_dict):
         df = pd.DataFrame(keypoints_dict, index=[0])
-        
                         
-
         return df
 
     def pred_to_dict(self, results_pose, ts):
@@ -83,14 +38,30 @@ class PoseEstimator:
         cp_dict_list = []
         
         if results_pose and results_pose.pose_landmarks:
-            
             cp_dict_list.append(
-                self.landmarks_to_dict(results_pose.pose_landmarks.landmark, self.W2I_POSE, ts)
+                self.landmarks_to_dict(results_pose.pose_landmarks.landmark, W_LIST_POSE, ts)
+            )
+        else:
+            cp_dict_list.append(
+                self.landmarks_to_dict_dummy(W_LIST_POSE, ts)
             )
 
         for cp in cp_dict_list:
             cp_dict.update(cp)
 
+        return cp_dict
+
+    def landmarks_to_dict_dummy(self, w2i, ts):
+ 
+        cp_dict = {}
+
+        for w in w2i:
+            cp_dict[w + "_x"] = 0.0
+            cp_dict[w + "_y"] = 0.0
+            cp_dict[w + "_v"] = 0.0
+
+        cp_dict["ts"] = ts
+        
         return cp_dict
 
     def landmarks_to_dict(self, landmarks, w2i, ts):
