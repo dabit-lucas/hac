@@ -87,3 +87,25 @@ W_LIST_RIGHT_HAND = [
 ]
 
 W2I_RIGHT_HAND = {v: k for k, v in enumerate(W_LIST_RIGHT_HAND)}
+
+ALL_COLUMNS = W_LIST_POSE + W_LIST_LEFT_HAND + W_LIST_RIGHT_HAND
+X_COLS = []
+Y_COLS = []
+for c in ALL_COLUMNS:
+    X_COLS.append(c + "_x")
+    Y_COLS.append(c + "_y")
+    
+LEFT_HAND_X_COLS = []
+LEFT_HAND_Y_COLS = []
+for c in W_LIST_LEFT_HAND:
+    LEFT_HAND_X_COLS.append(c + "_x")
+    LEFT_HAND_Y_COLS.append(c + "_y")
+    
+RIGHT_HAND_X_COLS = []
+RIGHT_HAND_Y_COLS = []
+for c in W_LIST_RIGHT_HAND:
+    RIGHT_HAND_X_COLS.append(c + "_x")
+    RIGHT_HAND_Y_COLS.append(c + "_y")
+    
+HAND_XY_COLS = LEFT_HAND_X_COLS + RIGHT_HAND_X_COLS + LEFT_HAND_Y_COLS + RIGHT_HAND_Y_COLS
+ALL_XY_COLS = X_COLS + Y_COLS + HAND_XY_COLS

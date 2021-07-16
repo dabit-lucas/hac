@@ -50,9 +50,9 @@ class Module:
                 
                 if hasattr(control, "method_name") and "move_diff" in control.method_name:
                     if control.method_name == "right_move_diff":
-                        fix_points = ["l_w"]
-                    if control.method_name == "left_move_diff":
                         fix_points = ["r_w"]
+                    if control.method_name == "left_move_diff":
+                        fix_points = ["l_w"]
 
                     fix_points_cols_x = [c + "_x" for c in fix_points]
                     fix_points_cols_y = [c + "_y" for c in fix_points]

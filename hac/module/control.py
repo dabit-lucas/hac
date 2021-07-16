@@ -83,14 +83,15 @@ class MouseControl:
         print("roll_down")
 
     @_check_freeze
-    def move_diff(self, factor=4000):
+    def move_diff(self, factor=2000):
         print("move_diff")
         x1 = self.df_data_1_x.values.mean()
         x2 = self.df_data_2_x.values.mean()
         y1 = self.df_data_1_y.values.mean()
         y2 = self.df_data_2_y.values.mean()
-        dx = (x2 - x1).item() * factor
+        dx = -(x2 - x1).item() * factor
         dy = -(y2 - y1).item() * factor
+        print(dx, dy)
         #pyautogui.move(dx, dy)
         #mouse.move(dx, dy, absolute=False)
         pydirectinput.move(int(dx), int(dy))
@@ -99,7 +100,7 @@ class MouseControl:
         self.move_diff()
 
     def left_move_diff(self):
-        self.move_diff(factor=10)
+        self.move_diff()
 
     def set_params(self, **params):
         for key in params:
