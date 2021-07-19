@@ -22,7 +22,7 @@ def normalize_data(df):
     
 def normalize_hand_data(df):
     
-    df_hand_data = df[HAND_XY_COLS].copy()
+    df_hand_data = df[HAND_XY_COLS + ["image_name", "label"]].copy()
     df_hand_data = df_hand_data.fillna(0)
     
     left_hand_center_x_cols = ['l_w_x']

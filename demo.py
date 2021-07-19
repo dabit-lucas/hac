@@ -98,7 +98,7 @@ if __name__ == "__main__":
             
             # To improve performance, optionally mark the image as not writeable to
             # pass by reference
-            image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image.flags.writeable = False
             
             hac.update(image, cap.get(cv2.CAP_PROP_POS_MSEC), keep_data=args.keep_data)
@@ -110,13 +110,11 @@ if __name__ == "__main__":
             hac.holistic_tracker.draw_landmarks(image)
             #hac.hand_tracker.draw_landmarks(image)
             #hac.pose_estimator.draw_landmarks(image)
-
-            cv2.imshow('MediaPipe Holistic', image)
+            cv2.imshow('MediaPipe Holistic', cv2.flip(image, 1))
             cv2.moveWindow('MediaPipe Holistic', 940, 460)
             
             e = time.time()
-            #print("FPS:", 1/(e-s))
-
+            
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
