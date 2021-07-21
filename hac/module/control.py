@@ -91,7 +91,6 @@ class MouseControl:
         y2 = self.df_data_2_y.values.mean()
         dx = -(x2 - x1).item() * factor
         dy = -(y2 - y1).item() * factor
-        print(dx, dy)
         #pyautogui.move(dx, dy)
         #mouse.move(dx, dy, absolute=False)
         pydirectinput.move(int(dx), int(dy))

@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     mouse_module.add_mouse_mapping("roll_up", "two_index_fingers_up")
     mouse_module.add_mouse_mapping("roll_down", "two_index_fingers_down")    
-    mouse_module.add_transition(movement_module, "33")
+    mouse_module.add_transition(movement_module, ["33", "33", "33"])
 
     movement_module.add_key_mapping("w", "walk")
     movement_module.add_key_mapping("w", "run")

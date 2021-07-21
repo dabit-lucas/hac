@@ -1,9 +1,15 @@
 import os 
 import pathlib
 import pickle
+import torch
 from ..utils.key_points import W_LIST_POSE, W2I_POSE, W_LIST_LEFT_HAND, W2I_LEFT_HAND, W_LIST_RIGHT_HAND, W2I_RIGHT_HAND
+from ..utils.normalizer import normalize_hand_data
+from ..model import HACModel
 
 class GestureDetector:
+
+    num_vertices = 21 * 2
+    in_channels = 3
 
     def __init__(self, model):
 
@@ -25,14 +31,14 @@ class GestureDetector:
             output: hand gesture like "one", "two", "three", "stone"...
 
         """
-        
         data = self.normalize(df)
-        pred = self.model.predict(data)
-        #print("conf", self.model.predict_proba(data).max())
-        output = self.pred2str(pred)
-        print(output)
+        x = torch.from_numpy(data).view(-1, self.in_channels, self.num_vertices, 1).float().to(self.device)
+        output = self.model(x) # batch, (x, y), num of joints, t
+        pred = output.reshape(-1, len(self.mapping)).cpu().argmax(axis=1, keepdim=True)
+        pred_gesture = self.pred2str(pred)
+        print(pred_gesture)
 
-        return output
+        return pred_gesture
 
     def pred2str(self, pred):
         """
@@ -44,21 +50,25 @@ class GestureDetector:
         pass
 
     def normalize(self, df):
-        df = df.copy()
-        df = df[self.target_columns].fillna(0)
-        df = df[self.target_columns].dropna()
-        df = df.apply(lambda x: (x - x.min()) / (x.max() - x.min()), axis=1)
-        df = df.fillna(0)
+        df = normalize_hand_data(df)
         return df.values
 
 class MouseControlGestureDetector(GestureDetector):
 
+    mapping = ["r_five", "r_zero", "l_five", "l_zero", "two_index_fingers_up", "two_index_fingers_down", "33", "55", "sit"]
+
     def __init__(self):
-        model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..\\model\\mouse\\model.pth")
-        model = pickle.load(open(model_path, 'rb'))
+        #model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..\\model\\mouse\\model.pth")
+        #model = pickle.load(open(model_path, 'rb'))
+        
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        num_class = len(self.mapping)
+        model = HACModel(in_channels=3, num_class=num_class, k_hop=2, mode="hand").to(self.device)
+        model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..\\trained_model\\gcn\\gestures\\best_model.pth")
+        model.load_state_dict(torch.load(model_path))
+        model.eval()
         super(MouseControlGestureDetector, self).__init__(model)
 
     def pred2str(self, pred):
-        mapping = ["r_five", "r_zero", "l_five", "l_zero", "two_index_fingers_up", "two_index_fingers_down", "33", "55", "sit", "gesture_none"] 
 
-        return mapping[pred[0]]
+        return self.mapping[pred[0]]
