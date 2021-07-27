@@ -1,12 +1,10 @@
-import pywinauto
 import pydirectinput
 import pyautogui
 import mouse
 import threading
 import time
 import keyboard
-import win32api
-import win32con
+
 pyautogui.FAILSAFE = False
 pydirectinput.PAUSE = 0
 pyautogui.PAUSE = 0
@@ -40,13 +38,14 @@ class MouseControl:
         need pos
         '''
 
-        pywinauto.mouse.move(coords=(self.pos[0], self.pos[1]))
+        #pywinauto.mouse.move(coords=(self.pos[0], self.pos[1]))
         time.sleep(0.02)
         mouse.click()
 
     @_check_freeze
     def move_to(self):
-        pywinauto.mouse.move(coords=(self.pos[0], self.pos[1]))
+        pass
+        #pywinauto.mouse.move(coords=(self.pos[0], self.pos[1]))
     
     @_check_freeze
     def click(self):
@@ -120,10 +119,10 @@ class KeyControl:
             return
 
         if self.key == "left":
-            pywinauto.keyboard.send_keys('{LEFT}')
+            #pywinauto.keyboard.send_keys('{LEFT}')
             pydirectinput.keyDown('left')
         elif self.key == "right":
-            pywinauto.keyboard.send_keys('{RIGHT}')
+            #pywinauto.keyboard.send_keys('{RIGHT}')
             pydirectinput.keyDown('right')
         elif self.key == "skip":
             pass

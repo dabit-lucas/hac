@@ -82,11 +82,9 @@ if __name__ == "__main__":
     count = 0                         
 
     locked = True
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
     while cap.isOpened():
-
-        #if keyboard.is_pressed("k"):
-        #    hac.start()
 
         try:
             s = time.time()
@@ -101,15 +99,19 @@ if __name__ == "__main__":
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image.flags.writeable = False
             
-            hac.update(image, cap.get(cv2.CAP_PROP_POS_MSEC), keep_data=args.keep_data)
+            # cap.get(cv2.CAP_PROP_POS_MSEC) can be zero
+            # https://stackoverflow.com/questions/44759407/why-does-opencv-cap-getcv2-cap-prop-pos-msec-only-return-0
+            ts = cap.get(cv2.CAP_PROP_POS_MSEC)
+            if abs(ts - 0.0) < 1e-8:
+                ts = count / fps
+
+            hac.update(image, ts, keep_data=args.keep_data)
             hac.execute()
 
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
             hac.holistic_tracker.draw_landmarks(image)
-            #hac.hand_tracker.draw_landmarks(image)
-            #hac.pose_estimator.draw_landmarks(image)
             cv2.imshow('MediaPipe Holistic', cv2.flip(image, 1))
             cv2.moveWindow('MediaPipe Holistic', 940, 460)
             
@@ -131,7 +133,6 @@ if __name__ == "__main__":
                 record = True
                 time.sleep(3)
             
-        
         except Exception as e:
             traceback.print_exc()
             break

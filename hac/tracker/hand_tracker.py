@@ -25,11 +25,6 @@ class HandTracker:
         self.results_hands = self.hands.process(image)
         keypoints_dict = self.pred_to_dict(self.results_hands, ts)
         hand_skeleton = self.dict_to_data(keypoints_dict)
-        # no target column
-        #try:
-        #except Exception as e:
-        #traceback.print_exc()
-        #    return None
 
         return hand_skeleton
 
