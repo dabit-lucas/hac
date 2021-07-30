@@ -1,5 +1,4 @@
 # Human Action Controller (HAC)
-Visual # HAC README
 
 ## Goal
 The human action based controller on any platform
