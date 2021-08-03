@@ -32,22 +32,6 @@ class MouseControl:
         return wrap
 
     @_check_freeze
-    def move_to_and_click(self):
-
-        '''
-        need pos
-        '''
-
-        #pywinauto.mouse.move(coords=(self.pos[0], self.pos[1]))
-        time.sleep(0.02)
-        mouse.click()
-
-    @_check_freeze
-    def move_to(self):
-        pass
-        #pywinauto.mouse.move(coords=(self.pos[0], self.pos[1]))
-    
-    @_check_freeze
     def click(self):
         mouse.click()
 
@@ -90,8 +74,6 @@ class MouseControl:
         y2 = self.df_data_2_y.values.mean()
         dx = -(x2 - x1).item() * factor
         dy = -(y2 - y1).item() * factor
-        #pyautogui.move(dx, dy)
-        #mouse.move(dx, dy, absolute=False)
         pydirectinput.move(int(dx), int(dy))
     
     def right_move_diff(self):
@@ -119,15 +101,12 @@ class KeyControl:
             return
 
         if self.key == "left":
-            #pywinauto.keyboard.send_keys('{LEFT}')
             pydirectinput.keyDown('left')
         elif self.key == "right":
-            #pywinauto.keyboard.send_keys('{RIGHT}')
             pydirectinput.keyDown('right')
         elif self.key == "skip":
             pass
         else:
-            #pydirectinput.keyDown(self.key)
             keyboard.press(self.key)
 
     def release(self):
@@ -135,6 +114,5 @@ class KeyControl:
         if self.key == "skip":
             return
 
-        #pydirectinput.keyUp(self.key)
         keyboard.release(self.key)
 

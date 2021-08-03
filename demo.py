@@ -80,8 +80,6 @@ if __name__ == "__main__":
     image_dir = "C:\\Users\\JAQQ\\YOLO\\hac\\data\\actions\\"  + args.dataset + "\\image"
 
     count = 0                         
-
-    locked = True
     fps = cap.get(cv2.CAP_PROP_FPS)
 
     while cap.isOpened():
@@ -139,3 +137,6 @@ if __name__ == "__main__":
 
         count += 1
     cap.release()
+
+    if args.keep_data:
+        hac.save_images()

@@ -43,7 +43,6 @@ class HandTracker:
         best_right_idx = -1
         best_right_score = 0.0
 
-
         if results_hands and results_hands.multi_hand_landmarks:
 
             for idx, hand_landmarks in enumerate(results_hands.multi_handedness):

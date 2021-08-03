@@ -42,11 +42,26 @@
 <span id="hac-controller-hac-module"></span><h2>hac.controller.hac module<a class="headerlink" href="#module-hac.controller.hac" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hac.controller.hac.</span></span><span class="sig-name descname"><span class="pre">HAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hand_tracker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pose_tracker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holistic_tracker</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hac.controller.hac.</span></span><span class="sig-name descname"><span class="pre">HAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">holistic_tracker</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.add_module">
 <span class="sig-name descname"><span class="pre">add_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.add_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an module to HAC.</p>
+<dl class="simple">
+<dt>inputs: </dt><dd><p>module_name: a module contains a set of actions which can be detected by a detector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.controller.hac.HAC.buffer_resize">
+<span class="sig-name descname"><span class="pre">buffer_resize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.buffer_resize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.controller.hac.HAC.buffer_size">
+<span class="sig-name descname"><span class="pre">buffer_size</span></span><em class="property"> <span class="pre">=</span> <span class="pre">10</span></em><a class="headerlink" href="#hac.controller.hac.HAC.buffer_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -57,51 +72,12 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.execute">
 <span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.gestures">
-<span class="sig-name descname"><span class="pre">gestures</span></span><em class="property"> <span class="pre">=</span> <span class="pre">deque([])</span></em><a class="headerlink" href="#hac.controller.hac.HAC.gestures" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.hand_skeleton">
-<span class="sig-name descname"><span class="pre">hand_skeleton</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#hac.controller.hac.HAC.hand_skeleton" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Execute controls (e.g. move mouse or press keys)</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.images">
 <span class="sig-name descname"><span class="pre">images</span></span><em class="property"> <span class="pre">=</span> <span class="pre">deque([])</span></em><a class="headerlink" href="#hac.controller.hac.HAC.images" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.keep_data">
-<span class="sig-name descname"><span class="pre">keep_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.keep_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.last_pred_t">
-<span class="sig-name descname"><span class="pre">last_pred_t</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#hac.controller.hac.HAC.last_pred_t" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.list_actions">
-<span class="sig-name descname"><span class="pre">list_actions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.list_actions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.list_gestures">
-<span class="sig-name descname"><span class="pre">list_gestures</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.list_gestures" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.list_movements">
-<span class="sig-name descname"><span class="pre">list_movements</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.list_movements" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.list_poses">
-<span class="sig-name descname"><span class="pre">list_poses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.list_poses" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -114,50 +90,34 @@
 <span class="sig-name descname"><span class="pre">modules</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{}</span></em><a class="headerlink" href="#hac.controller.hac.HAC.modules" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.movement_key">
-<span class="sig-name descname"><span class="pre">movement_key</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{}</span></em><a class="headerlink" href="#hac.controller.hac.HAC.movement_key" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.movement_mouse">
-<span class="sig-name descname"><span class="pre">movement_mouse</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{}</span></em><a class="headerlink" href="#hac.controller.hac.HAC.movement_mouse" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.poses">
-<span class="sig-name descname"><span class="pre">poses</span></span><em class="property"> <span class="pre">=</span> <span class="pre">deque([])</span></em><a class="headerlink" href="#hac.controller.hac.HAC.poses" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.controller.hac.HAC.release_keys">
+<span class="sig-name descname"><span class="pre">release_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.release_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release keys which aren’t pressed.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>For collecting data.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.save_images">
 <span class="sig-name descname"><span class="pre">save_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.save_images" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call save_images after the end of data collection, to save all images once.</p>
+</dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.saving_images">
-<span class="sig-name descname"><span class="pre">saving_images</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#hac.controller.hac.HAC.saving_images" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hac.controller.hac.HAC.saved_images">
+<span class="sig-name descname"><span class="pre">saved_images</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#hac.controller.hac.HAC.saved_images" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.set_init_module">
 <span class="sig-name descname"><span class="pre">set_init_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.set_init_module" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#hac.controller.hac.HAC.stop" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hac.controller.hac.HAC.t">
-<span class="sig-name descname"><span class="pre">t</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#hac.controller.hac.HAC.t" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set a default module. Check hac.module to know more about modules</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.tss">
@@ -167,7 +127,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="hac.controller.hac.HAC.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.controller.hac.HAC.update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>We call the function <code class="docutils literal notranslate"><span class="pre">`update`</span></code> every frame to capture an action from a skeleton, 
+and then generate controls.</p>
+</dd></dl>
 
 </dd></dl>
 

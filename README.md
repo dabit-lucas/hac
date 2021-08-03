@@ -1,10 +1,10 @@
 # Human Action Controller (HAC)
 
 ## Goal
-The human action based controller on any platform
+A human action controller running on different platforms.
 
-| Fun | Easy-to-use |
-| -------- | -------- |
+| Fun      | Easy-to-use |
+| -------- | --------    |
 | **Accurate** | **Anywhere** |
 
 ## Fun Examples
@@ -27,14 +27,12 @@ gif
 | PC / Win10, Ubuntu | Keyboard Control |    V     |         |
 | Switch                   |                  |          |
 
-
-
 ## Getting started
 
 ### Installation
 ```
-$ git clone {repo}
-$ cd {folder}
+$ git clone https://github.com/dabit-lucas/hac.git
+$ cd hac
 $ python setup.py install
 ```
 ### Run the demo of mouse control
@@ -42,19 +40,13 @@ $ python setup.py install
 $ python demo.py
 ```
 ## Documents
-Sphinx
+[The structure of HAC](hac/README.md)
 
 ## Community
-Welcome to ask questions in issues.
-
-Discord?
+Welcome to ask any question in issues.
 
 ## Contributing
 Any contribution is welcomed. Please fork this repo and summit a pull request.
-
-https://gitbook.tw/chapters/github/pull-request.html
-
-Guideline?
 
 ## More about HAC
 Dabit is the supporter and maintainer of this project
