@@ -1,13 +1,10 @@
 import pydirectinput
-import pyautogui
 import mouse
 import threading
 import time
 import keyboard
 
-pyautogui.FAILSAFE = False
 pydirectinput.PAUSE = 0
-pyautogui.PAUSE = 0
 
 class MouseControl:
 
@@ -57,12 +54,12 @@ class MouseControl:
 
     @_check_freeze
     def roll_up(self):
-        pyautogui.scroll(30) 
+        mouse.wheel(30) 
         print("roll_up")
 
     @_check_freeze
     def roll_down(self):
-        pyautogui.scroll(-30) 
+        mouse.wheel(-30) 
         print("roll_down")
 
     @_check_freeze
