@@ -2,3 +2,4 @@
 data/
 test.py
 *.ipynb_checkpoints*
+analysis/
