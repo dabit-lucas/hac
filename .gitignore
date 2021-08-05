@@ -3,3 +3,5 @@ data/
 test.py
 *.ipynb_checkpoints*
 analysis/
+*~
+docs/build
