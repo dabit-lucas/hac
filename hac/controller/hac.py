@@ -9,73 +9,41 @@ import os
 import numpy as np
 import csv
 import traceback
+
 from collections import defaultdict, deque
 from PIL import Image
+
 from ..module import Module, KeyControl
 from ..detector import RobloxLiftGameActionDetector, MouseControlGestureDetector
 
 class HAC:
 
-    hand_skeleton = None
-    t = None    # thread
-    stop = False
-    last_pred_t = None
-    saving_images = []
-    images = deque()
-    tss = deque()
-    gestures = deque()
-    poses = deque()
-    controls = deque()
-    movement_mouse = defaultdict(list)
-    movement_key = defaultdict(list)
-    modules = {}
-    module = None
+    saved_images = []    # images to data
+    images = deque()     # captured images
+    tss = deque()        # timestamps
+    controls = deque()   # controls need to be executed
+    modules = {}         # available modules of this controller
+    module = None        # current module
+    buffer_size = 10
 
-    def __init__(self, hand_tracker, pose_tracker, holistic_tracker):
-        self.hand_tracker = hand_tracker
-        self.pose_tracker = pose_tracker
+    def __init__(self, holistic_tracker):
+        """
+        Human Action Controller (HAC)
+        A Human action controller needs a holistic tracker to extract a skeleton from an image.
+
+        inputs:
+            holistic_tracker: a tracker to extract a skeleton from an image
+                              take hac.tracker.holistic_tracker as a reference.
+        """
         self.holistic_tracker = holistic_tracker
 
-    def keep_data(self, df_data):
-        self.df_data = df_data
-
-    def update(self, image, ts, keep_data=False):
-        
-        if self.tss and self.tss[-1] == ts:
-            return
-
-        gesture = None
-        pose = None
-        control = None
-
-        if self.holistic_tracker is None:
-            hand_data = self.hand_tracker(image, ts)
-            pose_data = self.pose_tracker(image, ts)
-            skeleton = pd.concat([hand_data[self.hand_tracker.target_columns], pose_data[self.pose_estimator.target_columns]], axis=1)
-        else:
-            skeleton = self.holistic_tracker(image, ts)
-        
-        if not keep_data:
-            control = self.module(skeleton)
-
-        if keep_data:
-            self.keep_data(skeleton)
-
-        self.images.append(image)
-        self.tss.append(ts)
-        self.controls.append(control)
-        
-        if len(self.images) > 30:
-            self.images.popleft()
-
-        if len(self.tss) > 30:
-            self.tss.popleft()
-
-        if len(self.controls) > 30:
-            self.controls.popleft()
-
     def add_module(self, module_name):
-
+        """
+        Add an module to HAC.
+        
+        inputs: 
+            module_name: a module contains a set of actions which can be detected by a detector.
+        """
         if module_name == "mouse":
             detector = MouseControlGestureDetector()
         if module_name == "roblox_lift_game":
@@ -87,39 +55,82 @@ class HAC:
         return module
         
     def set_init_module(self, module):
+        """
+        Set a default module. Check hac.module to know more about modules
+        """
+
         self.module = module
 
+    def buffer_resize(self):
+
+        if len(self.images) > self.buffer_size:
+            self.images.popleft()
+
+        if len(self.tss) > self.buffer_size:
+            self.tss.popleft()
+
+        if len(self.controls) > self.buffer_size:
+            self.controls.popleft()
+
+    def update(self, image, ts, keep_data=False):
+        '''
+        We call the function ```update``` every frame to capture an action from a skeleton, 
+        and then generate controls.
+        '''
+
+        if self.tss and self.tss[-1] == ts:
+            return
+
+        # capture the skeleton from an image
+        skeleton = self.holistic_tracker(image, ts)
+        
+        if keep_data:
+            control = None
+            self.df_data = df_data
+        else:
+            # skeleton -> action detection -> control
+            control = self.module(skeleton)
+        
+        self.images.append(image)
+        self.tss.append(ts)
+        self.controls.append(control)
+
+        self.buffer_resize()
+
+    def release_keys(self):
+        """
+        Release keys which aren't pressed.
+        """
+        for action, control in self.module.mapping.items():
+            if not isinstance(self.controls[-1], KeyControl):
+                if isinstance(control, KeyControl):
+                    control.release()
+            else:
+                if isinstance(control, KeyControl) and control.key != self.controls[-1].key:
+                    control.release()
+
     def execute(self):
+        """
+        Execute controls (e.g. move mouse or press keys)
+        """
         if len(self.controls) == 0:
             return 
         
         if not self.controls[-1]:
             return
 
-        if isinstance(self.controls[-1], Module):
-            
-            for action, control in self.module.mapping.items():
-                if not isinstance(self.controls[-1], KeyControl):
-                    if isinstance(control, KeyControl):
-                        control.release()
-                else:
-                    if isinstance(control, KeyControl) and control.key != self.controls[-1].key:
-                        control.release()
+        self.release_keys() # release not pressed keys
 
+        if isinstance(self.controls[-1], Module):
             self.module = self.controls[-1]
         else:
-            for action, control in self.module.mapping.items():
-                if not isinstance(self.controls[-1], KeyControl):
-                    if isinstance(control, KeyControl):
-                        control.release()
-                else:
-                    if isinstance(control, KeyControl) and control.key != self.controls[-1].key:
-                        control.release()
-
             if self.controls[-1].execute:
                 self.controls[-1].execute()
         
     def save(self, csv_path, image_dir, label):
+        """
+        For collecting data.
+        """
 
         csv_dir = os.path.dirname(csv_path)
         image_name = str(int(time.time() * 1000)) + ".png"
@@ -131,6 +142,7 @@ class HAC:
         if label is None:
             label = input("Label: ")
             label = re.findall("\d+", label)[0]
+
         self.df_data["image_name"] = [image_name]
         self.df_data["label"] = [label]
 
@@ -144,31 +156,13 @@ class HAC:
             df_data = self.df_data
             df_data.to_csv(csv_path, index=False)
         
-        self.saving_images.append((image, image_path))
-        #image_pil.save(image_path)
+        self.saved_images.append((image, image_path))
 
     def save_images(self):
-        for image, path in self.saving_images:
+        """
+        Call save_images after the end of data collection, to save all images once.
+        """
+
+        for image, path in self.saved_images:
             image_pil = Image.fromarray(image)
             image_pil.save(path)
-
-    def list_gestures(self):
-        gestures = []
-
-        return gestures
-
-    def list_poses(self):
-        poses = []
-
-        return poses
-
-    def list_actions(self):
-        
-        actions = []
-
-        return actions
-
-    def list_movements(self):
-
-        return self.list_gestures() + self.list_poses() + self.list_actions()
-    

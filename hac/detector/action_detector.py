@@ -71,7 +71,7 @@ class RobloxLiftGameActionDetector(ActionDetector):
         num_class = len(self.mapping)
         model = HACModel(in_channels=3, num_class=num_class, k_hop=2, mode="pose_hand").to(self.device)
         model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..\\trained_model\\gcn\\actions\\best_model.pth")
-        model.load_state_dict(torch.load(model_path))
+        model.load_state_dict(torch.load(model_path, map_location=torch.device(self.device)))
         model.eval()
         super(RobloxLiftGameActionDetector, self).__init__(model)
     
