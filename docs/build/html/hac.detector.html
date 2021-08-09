@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>hac.detector package &#8212; HAC 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="hac.model package" href="hac.model.html" />
+    <link rel="prev" title="hac.controller package" href="hac.controller.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="hac-detector-package">
+<h1>hac.detector package<a class="headerlink" href="#hac-detector-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-hac.detector.action_detector">
+<span id="hac-detector-action-detector-module"></span><h2>hac.detector.action_detector module<a class="headerlink" href="#module-hac.detector.action_detector" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hac.detector.action_detector.ActionDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hac.detector.action_detector.</span></span><span class="sig-name descname"><span class="pre">ActionDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.action_detector.ActionDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>init: </dt><dd><p>model: trained model 
+pred2str: a function convert predictions to string</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.detector.action_detector.ActionDetector.in_channels">
+<span class="sig-name descname"><span class="pre">in_channels</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#hac.detector.action_detector.ActionDetector.in_channels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.detector.action_detector.ActionDetector.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.action_detector.ActionDetector.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.detector.action_detector.ActionDetector.num_vertices">
+<span class="sig-name descname"><span class="pre">num_vertices</span></span><em class="property"> <span class="pre">=</span> <span class="pre">75</span></em><a class="headerlink" href="#hac.detector.action_detector.ActionDetector.num_vertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.detector.action_detector.ActionDetector.pred2str">
+<span class="sig-name descname"><span class="pre">pred2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.action_detector.ActionDetector.pred2str" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>input:</dt><dd><p>pred: prediction result from the model</p>
+</dd>
+<dt>output:</dt><dd><p>output: pose like “stand”, “jump”…</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hac.detector.action_detector.RobloxLiftGameActionDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hac.detector.action_detector.</span></span><span class="sig-name descname"><span class="pre">RobloxLiftGameActionDetector</span></span><a class="headerlink" href="#hac.detector.action_detector.RobloxLiftGameActionDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hac.detector.action_detector.ActionDetector" title="hac.detector.action_detector.ActionDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">hac.detector.action_detector.ActionDetector</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.detector.action_detector.RobloxLiftGameActionDetector.mapping">
+<span class="sig-name descname"><span class="pre">mapping</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['walk',</span> <span class="pre">'jump',</span> <span class="pre">'hands_on_hips',</span> <span class="pre">'point_left',</span> <span class="pre">'point_right',</span> <span class="pre">'arms_lift',</span> <span class="pre">'punch',</span> <span class="pre">'trample',</span> <span class="pre">'lateral_raise',</span> <span class="pre">'stand']</span></em><a class="headerlink" href="#hac.detector.action_detector.RobloxLiftGameActionDetector.mapping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.detector.action_detector.RobloxLiftGameActionDetector.pred2str">
+<span class="sig-name descname"><span class="pre">pred2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.action_detector.RobloxLiftGameActionDetector.pred2str" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>input:</dt><dd><p>pred: prediction result from the model</p>
+</dd>
+<dt>output:</dt><dd><p>output: pose like “stand”, “jump”…</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-hac.detector.gesture_detector">
+<span id="hac-detector-gesture-detector-module"></span><h2>hac.detector.gesture_detector module<a class="headerlink" href="#module-hac.detector.gesture_detector" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.GestureDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hac.detector.gesture_detector.</span></span><span class="sig-name descname"><span class="pre">GestureDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.gesture_detector.GestureDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.GestureDetector.in_channels">
+<span class="sig-name descname"><span class="pre">in_channels</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#hac.detector.gesture_detector.GestureDetector.in_channels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.GestureDetector.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.gesture_detector.GestureDetector.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.GestureDetector.num_vertices">
+<span class="sig-name descname"><span class="pre">num_vertices</span></span><em class="property"> <span class="pre">=</span> <span class="pre">42</span></em><a class="headerlink" href="#hac.detector.gesture_detector.GestureDetector.num_vertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.GestureDetector.pred2str">
+<span class="sig-name descname"><span class="pre">pred2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.gesture_detector.GestureDetector.pred2str" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>input:</dt><dd><p>pred: prediction result from the model</p>
+</dd>
+<dt>output:</dt><dd><p>output: hand gesture like “one”, “two”, “three”, “stone”…</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.MouseControlGestureDetector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hac.detector.gesture_detector.</span></span><span class="sig-name descname"><span class="pre">MouseControlGestureDetector</span></span><a class="headerlink" href="#hac.detector.gesture_detector.MouseControlGestureDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hac.detector.gesture_detector.GestureDetector" title="hac.detector.gesture_detector.GestureDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">hac.detector.gesture_detector.GestureDetector</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.MouseControlGestureDetector.mapping">
+<span class="sig-name descname"><span class="pre">mapping</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['r_five',</span> <span class="pre">'r_zero',</span> <span class="pre">'l_five',</span> <span class="pre">'l_zero',</span> <span class="pre">'two_index_fingers_up',</span> <span class="pre">'two_index_fingers_down',</span> <span class="pre">'33',</span> <span class="pre">'55',</span> <span class="pre">'sit']</span></em><a class="headerlink" href="#hac.detector.gesture_detector.MouseControlGestureDetector.mapping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hac.detector.gesture_detector.MouseControlGestureDetector.pred2str">
+<span class="sig-name descname"><span class="pre">pred2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hac.detector.gesture_detector.MouseControlGestureDetector.pred2str" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>input:</dt><dd><p>pred: prediction result from the model</p>
+</dd>
+<dt>output:</dt><dd><p>output: hand gesture like “one”, “two”, “three”, “stone”…</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-hac.detector">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hac.detector" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">HAC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hac</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hac.html">hac package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">hac</a><ul>
+  <li><a href="hac.html">hac package</a><ul>
+      <li>Previous: <a href="hac.controller.html" title="previous chapter">hac.controller package</a></li>
+      <li>Next: <a href="hac.model.html" title="next chapter">hac.model package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, HAC Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/hac.detector.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,10 @@
+PyDirectInput==1.0.4
+keyboard==0.13.5
+torch==1.9.0
+pandas==1.2.5
+pywin32==301
+opencv_python==4.2.0.32
+numpy==1.18.1
+mouse==0.7.1
+mediapipe==0.8.6
+protobuf==3.17.3

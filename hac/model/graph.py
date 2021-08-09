@@ -33,6 +33,11 @@ class Graph:
             
         
     def create_edge(self):
+        """
+        The pose edges are defined by https://google.github.io/mediapipe/solutions/pose.html
+        The hand edges are defined by https://google.github.io/mediapipe/solutions/hands.html
+        """
+
         self_edges = [(v, v) for v in range(self.num_vertices)]
         neighbor_edges = [(0, 1), (0, 4), (1, 2), (2, 3),
                          (3, 7), (4, 5), (5, 6), (6, 8), 
