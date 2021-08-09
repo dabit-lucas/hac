@@ -63,7 +63,7 @@ class MouseControl:
         print("roll_down")
 
     @_check_freeze
-    def move_diff(self, factor=2000):
+    def move_diff(self, factor=4000):
         print("move_diff")
         x1 = self.df_data_1_x.values.mean()
         x2 = self.df_data_2_x.values.mean()

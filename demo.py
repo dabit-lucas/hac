@@ -23,27 +23,12 @@ if __name__ == "__main__":
     mouse_module.add_mouse_mapping("roll_up", "two_index_fingers_up")
     mouse_module.add_mouse_mapping("roll_down", "two_index_fingers_down")   
 
-    # add transition action, after three frames of hand gesture "33", jump to another module
-    mouse_module.add_transition(movement_module, ["33", "33", "33"])
-
-    # create the mappings and the transition
-    movement_module.add_key_mapping("w", "walk")
-    movement_module.add_key_mapping("w", "run")
-    movement_module.add_key_mapping("s", "hands_on_hips")
-    movement_module.add_key_mapping("a", "point_left")
-    movement_module.add_key_mapping("d", "point_right")
-    movement_module.add_key_mapping("space", "jump")
-    movement_module.add_key_mapping("skip", "stand")
-    movement_module.add_mouse_mapping("click", "arms_lift")
-    movement_module.add_mouse_mapping("click", "punch")
-    movement_module.add_mouse_mapping("click", "trample")
-    movement_module.add_transition(mouse_module, "lateral_raise")
-
     # opencv get images from a webcam
     cap = cv2.VideoCapture(0)
-    factor = 60
-    width = 16 * factor
-    height = 9 * factor
+    factor = 1080 / 1920
+    ui_factor = 1.27
+    width = int(1920//2/ui_factor)
+    height = width * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
@@ -81,7 +66,7 @@ if __name__ == "__main__":
 
         # flip the image only for the usage habit
         cv2.imshow('HAC demo', cv2.flip(image, 1))
-        cv2.moveWindow('HAC demo', 0, 0)
+        cv2.moveWindow('HAC demo', int(1920//2/ui_factor), 0)
         
         e = time.time()
         

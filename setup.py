@@ -18,4 +18,5 @@ setup(
     author_email='dabit-lucas@gmail.com, chen.jiunhan@gmail.com',
     packages=find_packages(),
     keywords='human action controller',
+    url='https://github.com/dabit-lucas/hac'
 )
