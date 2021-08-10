@@ -10,7 +10,7 @@ A human action controller running on different platforms.
 ## Fun Examples
 
 ### Controlling video
-![mouse_control](https://github.com/dabit-lucas/hac/tree/main/images/mouse_control_small.gif)
+![mouse_control](https://github.com/dabit-lucas/hac/blob/main/images/mouse_control_small.gif?raw=true)
 
 ## Solutions provided by HAC
 |      Platform      |      Module      | Progress | Comment |
