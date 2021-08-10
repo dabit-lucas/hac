@@ -14,15 +14,14 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
 
-
 # -- Project information -----------------------------------------------------
 
-project = 'HAC'
+project = 'PyHAC'
 copyright = '2021, HAC Team'
 author = 'HAC Team'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.0.1'
 
 
 # -- General configuration ---------------------------------------------------
