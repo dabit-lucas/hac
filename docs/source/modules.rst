@@ -1,7 +1,7 @@
-hac
-===
+pyhac
+=====
 
 .. toctree::
    :maxdepth: 4
 
-   hac
+   pyhac
