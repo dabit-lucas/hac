@@ -1,4 +1,4 @@
-from hac import hac
+from pyhac import hac
 import cv2
 import time
 import sys
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
-    count = 0                         
+    count = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
 
     while cap.isOpened():
