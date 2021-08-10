@@ -7,7 +7,7 @@ with pathlib.Path('requirements.txt').open() as requirements_txt:
                     in pkg_resources.parse_requirements(requirements_txt)]
 
 setup(
-    name='hac',
+    name='pyhac',
     description='A human action controller running on different platforms',
     license='Apache License 2.0',
     long_description=open('README.md').read(),
