@@ -12,13 +12,6 @@ set BUILDDIR=build
 
 if "%1" == "" goto help
 
-if "%1" == "github" (
-	%SPHINXBUILD% -M html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
-	xcopy %BUILDDIR%\html\* . /E
-	echo.Generated files copied to ../docs
-	goto end
-)
-
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
 	echo.
@@ -30,6 +23,13 @@ if errorlevel 9009 (
 	echo.If you don't have Sphinx installed, grab it from
 	echo.http://sphinx-doc.org/
 	exit /b 1
+)
+
+if "%1" == "github" (
+        %SPHINXBUILD% -M html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+        xcopy %BUILDDIR%\html\* . /E
+        echo.Generated files copied to ../docs
+        goto end
 )
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%

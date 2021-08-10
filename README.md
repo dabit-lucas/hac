@@ -35,7 +35,7 @@ $ python demo.py
 ```
 
 ## Documents
-[The structure of HAC](https://github.com/dabit-lucas/hac/tree/main/hac/README.md)
+[The structure of HAC](https://github.com/dabit-lucas/hac/tree/main/pyhac/README.md)
 
 ## Community
 Welcome to ask any question in issues.
