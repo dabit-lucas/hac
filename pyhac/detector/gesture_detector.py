@@ -58,8 +58,6 @@ class MouseControlGestureDetector(GestureDetector):
     mapping = ["r_five", "r_zero", "l_five", "l_zero", "two_index_fingers_up", "two_index_fingers_down", "33", "55", "sit"]
 
     def __init__(self):
-        #model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..\\model\\mouse\\model.pth")
-        #model = pickle.load(open(model_path, 'rb'))
         
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         num_class = len(self.mapping)

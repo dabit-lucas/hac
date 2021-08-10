@@ -10,7 +10,7 @@ A human action controller running on different platforms.
 ## Fun Examples
 
 ### Controlling video
-![mouse_control](images/mouse_control_small.gif)
+![mouse_control](https://github.com/dabit-lucas/hac/tree/main/images/mouse_control_small.gif)
 
 ## Solutions provided by HAC
 |      Platform      |      Module      | Progress | Comment |
@@ -25,7 +25,7 @@ A human action controller running on different platforms.
 
 ### Installation
 ```
-$ pip install hac
+$ pip install pyhac
 ```
 ### Run the demo of mouse control
 ```

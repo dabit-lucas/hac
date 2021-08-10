@@ -1,1 +1,1 @@
-recursive-include hac\trained_model\gcn\ *.pth
+recursive-include pyhac\trained_model\gcn\ *.pth
