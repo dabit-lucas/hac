@@ -7,8 +7,7 @@ import argparse
 if __name__ == "__main__":
 
     # add predefined modules
-    mouse_module = hac.add_module("mouse")
-    movement_module = hac.add_module("roblox_lift_game")
+    mouse_module = hac.add_module("mouse_control")
     hac.set_init_module(mouse_module)
 
     # create mapping between controls and actions
@@ -74,4 +73,5 @@ if __name__ == "__main__":
             break
 
         count += 1
+
     cap.release()

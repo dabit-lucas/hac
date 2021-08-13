@@ -40,3 +40,6 @@ class HACModel(nn.Module):
         x = self.fcn(x).squeeze()
         #x = self.relu(x)
         return x
+
+    def get_num_vertices(self):
+        return self.graph.get_num_vertices()
