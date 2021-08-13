@@ -1,0 +1,15 @@
+{
+    "actions": [
+        "r_five",
+        "r_zero",
+        "l_five",
+        "l_zero",
+        "two_index_fingers_up",
+        "two_index_fingers_down",
+        "33",
+        "55",
+        "sit"
+    ],
+    "type": "gesture_only"
+}
+

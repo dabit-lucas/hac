@@ -9,12 +9,13 @@ import os
 import numpy as np
 import csv
 import traceback
+import torch
 
 from collections import defaultdict, deque
 from PIL import Image
 
 from ..module import Module, KeyControl
-from ..detector import RobloxLiftGameActionDetector, MouseControlGestureDetector
+from ..detector import Detector
 
 class HAC:
 
@@ -44,11 +45,10 @@ class HAC:
         inputs: 
             module_name: a module contains a set of actions which can be detected by a detector.
         """
-        if module_name == "mouse":
-            detector = MouseControlGestureDetector()
-        if module_name == "roblox_lift_game":
-            detector = RobloxLiftGameActionDetector()
-
+        model_data_path = os.path.join("pyhac\\trained_model\\gcn", \
+                                        module_name, "best_model.pth")
+        model_data = torch.load(model_data_path)
+        detector = Detector(model_data)
         module = Module(detector)
         self.modules[module_name] = module
 
@@ -86,7 +86,7 @@ class HAC:
         
         if keep_data:
             control = None
-            self.df_data = df_data
+            self.df_data = skeleton
         else:
             # skeleton -> action detection -> control
             control = self.module(skeleton)
