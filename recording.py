@@ -42,8 +42,8 @@ if __name__ == "__main__":
     height = 9 * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    csv_path = "C:\\Users\\JAQQ\\YOLO\\hac\\data\\actions\\" + args.dataset + "\\data.csv"
-    image_dir = "C:\\Users\\JAQQ\\YOLO\\hac\\data\\actions\\"  + args.dataset + "\\image"
+    csv_path = "data\\actions\\" + args.dataset + "\\data.csv"
+    image_dir = "data\\actions\\"  + args.dataset + "\\image"
 
     count = 0                         
     fps = cap.get(cv2.CAP_PROP_FPS)
