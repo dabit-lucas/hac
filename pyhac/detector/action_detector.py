@@ -51,16 +51,6 @@ class ActionDetector:
         df = normalize_data(df)
         return df.values
 
-    '''
-    def normalize(self, df):
-        df = df.copy()
-        df = df[self.target_columns].fillna(0)
-        df = df[self.target_columns].dropna()
-        df = df.apply(lambda x: (x - x.min()) / (x.max() - x.min()), axis=1)
-        df = df.fillna(0)
-        return df.values
-    '''
-
 class RobloxLiftGameActionDetector(ActionDetector):
 
     mapping = ["walk", "jump", "hands_on_hips", "point_left", "point_right", "arms_lift", "punch", "trample", "lateral_raise", "stand"]
