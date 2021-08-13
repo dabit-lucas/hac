@@ -93,3 +93,5 @@ class Graph:
         
         self.A_k = np.stack(As, axis=0)
         
+    def get_num_vertices(self):
+        return self.num_vertices
