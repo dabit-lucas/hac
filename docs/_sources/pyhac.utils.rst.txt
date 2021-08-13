@@ -4,6 +4,14 @@ pyhac.utils package
 Submodules
 ----------
 
+pyhac.utils.data\_augmentation module
+-------------------------------------
+
+.. automodule:: pyhac.utils.data_augmentation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyhac.utils.key\_points module
 ------------------------------
 
