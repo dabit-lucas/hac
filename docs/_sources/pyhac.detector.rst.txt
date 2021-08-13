@@ -12,6 +12,14 @@ pyhac.detector.action\_detector module
    :undoc-members:
    :show-inheritance:
 
+pyhac.detector.detector module
+------------------------------
+
+.. automodule:: pyhac.detector.detector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyhac.detector.gesture\_detector module
 ---------------------------------------
 
