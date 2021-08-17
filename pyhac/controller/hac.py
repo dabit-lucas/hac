@@ -116,10 +116,10 @@ class HAC:
         if len(self.controls) == 0:
             return 
         
+        self.release_keys() # release not pressed keys
+
         if not self.controls[-1]:
             return
-
-        self.release_keys() # release not pressed keys
 
         if isinstance(self.controls[-1], Module):
             self.module = self.controls[-1]

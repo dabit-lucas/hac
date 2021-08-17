@@ -60,7 +60,7 @@ Here is an example of a config file of action set,
 ```
 These actions form a model by running a training process:
 ```
-$ python training.py --conf {path_of_action} --model_name {name_of_model}
+$ python train.py --conf {path_of_action} --model_name {name_of_model}
 ```
 The generated model will become a module. Take mouse control module as an exmaple, it can create mappings among actions and controls by the following code:
 ```

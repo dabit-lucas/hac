@@ -1,0 +1,8 @@
+{
+    "actions": [
+        "r_point_left",
+        "r_point_right",
+        "sit"
+    ],
+    "type": "gesture_only"
+}

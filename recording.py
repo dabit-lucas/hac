@@ -34,12 +34,13 @@ if __name__ == "__main__":
     parser.add_argument('-k', '--keep_data', type=str2bool, default="True")
     args = parser.parse_args()
 
-    record_time = 10
+    record_time = 30
 
     cap = cv2.VideoCapture(0)
-    factor = 60
-    width = 16 * factor
-    height = 9 * factor
+    factor = 1080 / 1920
+    ui_factor = 1.27
+    width = int(1920//2/ui_factor)
+    height = width * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     csv_path = "data\\actions\\" + args.dataset + "\\data.csv"
@@ -76,8 +77,8 @@ if __name__ == "__main__":
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
             hac.holistic_tracker.draw_landmarks(image)
-            cv2.imshow('MediaPipe Holistic', cv2.flip(image, 1))
-            cv2.moveWindow('MediaPipe Holistic', 940, 460)
+            cv2.imshow('HAC demo', cv2.flip(image, 1))
+            cv2.moveWindow('HAC demo', int(1920//2/ui_factor), 0)
             
             e = time.time()
             
@@ -85,7 +86,6 @@ if __name__ == "__main__":
                 break
 
             if record:
-                print("Recording")
                 if t is None:                
                     t = threading.Thread(target=timer, daemon=True, args=(record_time,))
                     t.start()
