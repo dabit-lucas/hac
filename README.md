@@ -9,8 +9,17 @@ A human action controller running on different platforms.
 
 ## Fun Examples
 
-### Controlling video
-![Mouse Control](https://raw.githubusercontent.com/dabit-lucas/hac/main/images/mouse_control_small.gif)
+### Mouse Control
+![Mouse Control](https://raw.githubusercontent.com/dabit-lucas/hac/main/images/mouse_control.gif)
+
+### Keyboard Control
+![Keyboard Control](https://raw.githubusercontent.com/dabit-lucas/hac/main/images/down.gif)
+
+### Playing Game
+![Pikachu](https://raw.githubusercontent.com/dabit-lucas/hac/main/images/pikachu.gif)
+
+### Enhancing interaction
+![Gather Town](https://raw.githubusercontent.com/dabit-lucas/hac/main/images/gather_town.gif)
 
 ## Solutions provided by HAC
 |      Platform      |      Module      | Progress | Comment |
@@ -19,7 +28,6 @@ A human action controller running on different platforms.
 | PC / Win10 | Keyboard Control |    V     |         |
 | PC / Ubuntu | Mouse Control |         |         |
 | PC / Ubuntu | Keyboard Control |         |         |
-| Switch                   |                  |          |
 
 ## Getting started
 
