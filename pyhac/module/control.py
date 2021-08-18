@@ -94,22 +94,16 @@ class KeyControl:
 
     def execute(self):
 
-        if self.key == "skip":
-            return
-
         if self.key == "left":
             pydirectinput.keyDown('left')
         elif self.key == "right":
             pydirectinput.keyDown('right')
-        elif self.key == "skip":
-            pass
         else:
             keyboard.press(self.key)
 
     def release(self):
 
-        if self.key == "skip":
-            return
+        print("release:", self.key)
 
         keyboard.release(self.key)
 

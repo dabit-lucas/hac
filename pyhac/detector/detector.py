@@ -3,7 +3,7 @@ import pathlib
 import pickle
 import torch
 from ..utils.key_points import W_LIST_POSE, W2I_POSE, W_LIST_LEFT_HAND, W2I_LEFT_HAND, W_LIST_RIGHT_HAND, W2I_RIGHT_HAND
-from ..utils.normalizer import normalize_hand_data
+from ..utils.normalizer import normalize_data, normalize_hand_data
 from ..model import HACModel
 
 class Detector:
@@ -47,5 +47,8 @@ class Detector:
         return self.mapping[pred[0]]
 
     def normalize(self, df):
-        df = normalize_hand_data(df)
+        if self.model.get_num_vertices() == 75: # hand + pose
+            df = normalize_data(df)
+        else:
+            df = normalize_hand_data(df)
         return df.values

@@ -1,0 +1,14 @@
+{
+    "actions": [
+        "r_point_left",
+        "r_point_right",
+        "r_point_up",
+        "r_point_down",
+        "wave_hand",
+        "love",
+        "thumb_up",
+        "question_mark",
+        "sit"
+    ],
+    "type": "gesture_only"
+}

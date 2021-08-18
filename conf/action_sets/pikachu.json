@@ -1,0 +1,10 @@
+{
+    "actions": [
+        "point_left",
+        "point_right",
+        "pikachu_jump",
+        "spike",
+        "stand"
+    ],
+    "type": "actions"
+}

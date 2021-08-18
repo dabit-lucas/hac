@@ -147,15 +147,14 @@ if __name__ == "__main__":
 
     data_path = os.path.join("data", "actions")
     model_target = conf_json["type"]
+    actions = conf_json["actions"]
 
     if model_target == "actions":
         mode = "pose_hand"
-        actions = ["walk", "jump", "hands_on_hips", "point_left", "point_right", "arms_lift", "punch", "trample", "lateral_raise", "stand"]
         target_columns_x = ALL_XY_COLS.copy()
         ALL_XY_COLS += ["image_name", "label"] # keep label
     elif model_target == "gesture_only":
         mode = "hand"
-        actions = conf_json["actions"]
         target_columns_x = HAND_XY_COLS.copy()
         HAND_XY_COLS += ["image_name", "label"] # keep label
     else:
