@@ -26,7 +26,11 @@ if __name__ == "__main__":
     mouse_module.add_key_mapping("enter", "spike")
 
     # opencv get images from a webcam
-    cap = cv2.VideoCapture(0)
+    if sys.platform.startswith("win"):
+        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    else:
+        cap = cv2.VideoCapture(0)
+
     factor = 1080 / 1920
     ui_factor = 1
     width = int(1920//2/ui_factor)
@@ -35,11 +39,9 @@ if __name__ == "__main__":
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
     count = 0
-    fps = cap.get(cv2.CAP_PROP_FPS)
-
+    t_start = time.time()
     while cap.isOpened():
 
-        s = time.time()
         success, image = cap.read()
         if not success:
             print("Ignoring empty camera frame.")
@@ -50,12 +52,7 @@ if __name__ == "__main__":
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image.flags.writeable = False
         
-        # cap.get(cv2.CAP_PROP_POS_MSEC) can be zero
-        # https://stackoverflow.com/questions/44759407/why-does-opencv-cap-getcv2-cap-prop-pos-msec-only-return-0
-        ts = cap.get(cv2.CAP_PROP_POS_MSEC)
-        if abs(ts - 0.0) < 1e-8:
-            ts = count / fps
-
+        ts = time.time() - t_start
         # detect actions
         hac.update(image, ts)
         # execute controls
@@ -69,8 +66,6 @@ if __name__ == "__main__":
         # flip the image only for the usage habit
         cv2.imshow('HAC demo', cv2.flip(image, 1))
         cv2.moveWindow('HAC demo', 0, 0)
-        
-        e = time.time()
         
         if cv2.waitKey(5) & 0xFF == 27:
             break
