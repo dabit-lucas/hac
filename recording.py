@@ -1,4 +1,3 @@
-from pyhac import hac
 import cv2
 import time
 import keyboard
@@ -6,6 +5,9 @@ import traceback
 import sys
 import threading
 import argparse
+import os
+
+from pyhac import hac
 
 record = False
 end_record = False
@@ -43,8 +45,8 @@ if __name__ == "__main__":
     height = width * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    csv_path = "data\\actions\\" + args.dataset + "\\data.csv"
-    image_dir = "data\\actions\\"  + args.dataset + "\\image"
+    csv_path = os.path.join("data", "actions", args.dataset, "data.csv")
+    image_dir = os.path.join("data", "actions", args.dataset, "image")
 
     count = 0                         
     fps = cap.get(cv2.CAP_PROP_FPS)
