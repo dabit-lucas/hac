@@ -184,7 +184,7 @@ if __name__ == "__main__":
     num_epochs = 100
     num_class = len(actions)
     skf = StratifiedKFold(n_splits=5)
-    model_dir = "pyhac\\trained_model\\gcn\\" + args.model_name
+    model_dir = os.path.join("pyhac", "trained_model", "gcn", args.model_name)
 
     k_fold_losses = []
     k_fold_accs = []

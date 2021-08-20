@@ -1,4 +1,3 @@
-from pyhac import hac
 import cv2
 import time
 import keyboard
@@ -6,6 +5,9 @@ import traceback
 import sys
 import threading
 import argparse
+import os
+
+from pyhac import hac
 
 record = False
 end_record = False
@@ -38,13 +40,13 @@ if __name__ == "__main__":
 
     cap = cv2.VideoCapture(0)
     factor = 1080 / 1920
-    ui_factor = 1.27
+    ui_factor = 1
     width = int(1920//2/ui_factor)
     height = width * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    csv_path = "data\\actions\\" + args.dataset + "\\data.csv"
-    image_dir = "data\\actions\\"  + args.dataset + "\\image"
+    csv_path = os.path.join("data", "actions", args.dataset, "data.csv")
+    image_dir = os.path.join("data", "actions", args.dataset, "image")
 
     count = 0                         
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -78,7 +80,7 @@ if __name__ == "__main__":
 
             hac.holistic_tracker.draw_landmarks(image)
             cv2.imshow('HAC demo', cv2.flip(image, 1))
-            cv2.moveWindow('HAC demo', int(1920//2/ui_factor), 0)
+            cv2.moveWindow('HAC demo', 0, 0)
             
             e = time.time()
             
