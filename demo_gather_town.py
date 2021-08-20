@@ -2,9 +2,18 @@ from pyhac import hac
 import cv2
 import time
 import sys
+import signal
 import argparse
 
+def signal_handler(sig, frame):
+    global hac
+    hac.release_all()
+    sys.exit(0)
+
 if __name__ == "__main__":
+
+    # release all keys and mouse after interruption
+    signal.signal(signal.SIGINT, signal_handler)
 
     # add predefined modules
     mouse_module = hac.add_module("gather_town")
@@ -23,7 +32,7 @@ if __name__ == "__main__":
     # opencv get images from a webcam
     cap = cv2.VideoCapture(0)
     factor = 1080 / 1920
-    ui_factor = 1.27
+    ui_factor = 1
     width = int(1920//2/ui_factor)
     height = width * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
@@ -63,7 +72,7 @@ if __name__ == "__main__":
 
         # flip the image only for the usage habit
         cv2.imshow('HAC demo', cv2.flip(image, 1))
-        cv2.moveWindow('HAC demo', int(1920//2/ui_factor), 0)
+        cv2.moveWindow('HAC demo', 0, 0)
         
         e = time.time()
         

@@ -62,7 +62,8 @@ class MouseControlGestureDetector(GestureDetector):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         num_class = len(self.mapping)
         model = HACModel(in_channels=3, num_class=num_class, k_hop=2, mode="hand").to(self.device)
-        model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..\\trained_model\\gcn\\gestures\\best_model.pth")
+        model_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "..", "trained_model", \
+                                  "gcn", "gestures", "best_model.pth")
         model.load_state_dict(torch.load(model_path, map_location=torch.device(self.device)))
         model.eval()
         super(MouseControlGestureDetector, self).__init__(model)
