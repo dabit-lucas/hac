@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     cap = cv2.VideoCapture(0)
     factor = 1080 / 1920
-    ui_factor = 1.27
+    ui_factor = 1
     width = int(1920//2/ui_factor)
     height = width * factor
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
             hac.holistic_tracker.draw_landmarks(image)
             cv2.imshow('HAC demo', cv2.flip(image, 1))
-            cv2.moveWindow('HAC demo', int(1920//2/ui_factor), 0)
+            cv2.moveWindow('HAC demo', 0, 0)
             
             e = time.time()
             
