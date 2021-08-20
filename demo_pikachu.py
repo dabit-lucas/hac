@@ -7,7 +7,6 @@ import argparse
 
 def signal_handler(sig, frame):
     global hac
-    print("release_all")
     hac.release_all()
     sys.exit(0)
 
