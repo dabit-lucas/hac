@@ -1,15 +1,19 @@
-import pydirectinput
 import mouse
 import threading
 import time
 import keyboard
+import sys
+import pyautogui
 
-pydirectinput.PAUSE = 0
+if sys.platform.startswith("win"):
+    import pydirectinput
+    pydirectinput.PAUSE = 0
+else:
+    pyautogui.PAUSE = 0
 
 class MouseControl:
 
     freeze = False
-
     def __init__(self, method, **params):
         self.execute = getattr(self, method)
         self.method_name = method
@@ -30,38 +34,54 @@ class MouseControl:
 
     @_check_freeze
     def click(self):
-        mouse.click()
-
+        if sys.platform.startswith("win"):
+            mouse.click()
+        else:
+            pyautogui.click()
     @_check_freeze
     def mouse_left_down(self):
-        mouse.press()
-
+        if sys.platform.startswith("win"):
+            mouse.press()
+        else:
+            pyautogui.mouseDown()
     @_check_freeze
     def mouse_left_up(self):
-        mouse.release()
-
+        if sys.platform.startswith("win"):
+            mouse.release()
+        else:
+            pyautogui.mouseUp()
     @_check_freeze
     def mouse_right_down(self):
-        mouse.press(button="right")
-
+        if sys.platform.startswith("win"):
+            mouse.press(button="right")
+        else:
+            pyautogui.mouseDown(button="right")
     @_check_freeze
     def mouse_right_up(self):
-        mouse.release(button="right")
-
+        if sys.platform.startswith("win"):
+            mouse.release(button="right")
+        else:
+            pyautogui.mouseUp(button="right")
     @_check_freeze
     def right_click(self):
-        mouse.right_click()
-
+        if sys.platform.startswith("win"):
+            mouse.right_click()
+        else:
+            mouse.right_click()
     @_check_freeze
     def roll_up(self):
-        mouse.wheel(30) 
         print("roll_up")
-
+        if sys.platform.startswith("win"):
+            mouse.wheel(30) 
+        else:
+            pyautogui.scroll(30) 
     @_check_freeze
     def roll_down(self):
-        mouse.wheel(-30) 
         print("roll_down")
-
+        if sys.platform.startswith("win"):
+            mouse.wheel(-30)
+        else:
+            pyautogui.scroll(-30)
     @_check_freeze
     def move_diff(self, factor=4000):
         print("move_diff")
@@ -71,8 +91,12 @@ class MouseControl:
         y2 = self.df_data_2_y.values.mean()
         dx = -(x2 - x1).item() * factor
         dy = -(y2 - y1).item() * factor
-        pydirectinput.move(int(dx), int(dy))
-    
+        
+        if sys.platform.startswith("win"):
+            pydirectinput.move(int(dx), int(dy))
+        else:
+            mouse.move(int(dx), int(dy), absolute=False)
+
     def right_move_diff(self):
         self.move_diff()
 
@@ -87,6 +111,10 @@ class MouseControl:
         time.sleep(sec)
         self.freeze = False
 
+    def release(self):
+        self.mouse_left_up()
+        self.mouse_right_up()
+
 class KeyControl:
     def __init__(self, key, **params):
         self.key = key
@@ -94,16 +122,19 @@ class KeyControl:
 
     def execute(self):
 
-        if self.key == "left":
-            pydirectinput.keyDown('left')
-        elif self.key == "right":
-            pydirectinput.keyDown('right')
+        if sys.platform.startswith("win"):
+            if self.key == "left":
+                pydirectinput.keyDown('left')
+            elif self.key == "right":
+                pydirectinput.keyDown('right')
+            else:
+                keyboard.press(self.key)
         else:
-            keyboard.press(self.key)
-
+            pyautogui.keyDown(self.key)
     def release(self):
 
-        print("release:", self.key)
-
-        keyboard.release(self.key)
+        if sys.platform.startswith("win"):
+            keyboard.release(self.key)
+        else:
+            pyautogui.keyUp(self.key)
 

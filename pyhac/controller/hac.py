@@ -14,7 +14,7 @@ import torch
 from collections import defaultdict, deque
 from PIL import Image
 
-from ..module import Module, KeyControl
+from ..module import Module, MouseControl, KeyControl
 from ..detector import Detector
 
 class HAC:
@@ -45,7 +45,7 @@ class HAC:
         inputs: 
             module_name: a module contains a set of actions which can be detected by a detector.
         """
-        model_data_path = os.path.join("pyhac\\trained_model\\gcn", \
+        model_data_path = os.path.join("pyhac", "trained_model", "gcn", \
                                         module_name, "best_model.pth")
         model_data = torch.load(model_data_path)
         detector = Detector(model_data)
@@ -101,13 +101,22 @@ class HAC:
         """
         Release keys which aren't pressed.
         """
-        for action, control in self.module.mapping.items():
+        for _, control in self.module.mapping.items():
             if not isinstance(self.controls[-1], KeyControl):
                 if isinstance(control, KeyControl):
                     control.release()
             else:
                 if isinstance(control, KeyControl) and control.key != self.controls[-1].key:
                     control.release()
+
+    def release_all(self):
+        """
+        Release keys and mouse to prevent from blocking devices.
+        """
+        for _, control in self.module.mapping.items():
+            if isinstance(self.controls[-1], KeyControl) or \
+               isinstance(self.controls[-1], MouseControl):
+                control.release()
 
     def execute(self):
         """
