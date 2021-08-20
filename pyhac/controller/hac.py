@@ -47,7 +47,8 @@ class HAC:
         """
         model_data_path = os.path.join("pyhac", "trained_model", "gcn", \
                                         module_name, "best_model.pth")
-        model_data = torch.load(model_data_path)
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model_data = torch.load(model_data_path, map_location=device)
         detector = Detector(model_data)
         module = Module(detector)
         self.modules[module_name] = module
