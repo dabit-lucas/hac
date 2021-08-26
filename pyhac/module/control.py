@@ -8,6 +8,7 @@ import pyautogui
 if sys.platform.startswith("win"):
     import pydirectinput
     pydirectinput.PAUSE = 0
+    pydirectinput.FAILSAFE = False
 else:
     pyautogui.PAUSE = 0
 
@@ -17,10 +18,11 @@ class MouseControl:
     def __init__(self, method, **params):
         self.execute = getattr(self, method)
         self.method_name = method
+        self.sensitivity_factor = 4.0
 
         for key in params:
             setattr(self, key, params[key])
-    
+
     def _check_freeze(func):
         def wrap(self, **params):
             sec = 0.01
@@ -83,15 +85,16 @@ class MouseControl:
         else:
             pyautogui.scroll(-30)
     @_check_freeze
-    def move_diff(self, factor=4000):
+    def move_diff(self):
         print("move_diff")
+        fix_factor = 1000.0
         x1 = self.df_data_1_x.values.mean()
         x2 = self.df_data_2_x.values.mean()
         y1 = self.df_data_1_y.values.mean()
         y2 = self.df_data_2_y.values.mean()
-        dx = -(x2 - x1).item() * factor
-        dy = -(y2 - y1).item() * factor
-        
+        dx = -(x2 - x1).item() * self._sensitivity_factor * fix_factor
+        dy = -(y2 - y1).item() * self._sensitivity_factor * fix_factor
+        print(self._sensitivity_factor)
         if sys.platform.startswith("win"):
             pydirectinput.move(int(dx), int(dy))
         else:
@@ -114,6 +117,16 @@ class MouseControl:
     def release(self):
         self.mouse_left_up()
         self.mouse_right_up()
+
+    @property
+    def sensitivity_factor(self):
+        print("getter")
+        return self._sensitivity_factor
+
+    @sensitivity_factor.setter
+    def sensitivity_factor(self, sensitivity_factor):
+        print("setter")
+        self._sensitivity_factor = sensitivity_factor
 
 class KeyControl:
     def __init__(self, key, **params):
