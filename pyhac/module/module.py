@@ -25,8 +25,8 @@ class Module:
     def add_transition(self, control, actions):
         self.add_mapping(control, actions)
 
-    def add_mouse_mapping(self, control, action):
-        self.add_mapping(MouseControl(control), action)
+    def add_mouse_mapping(self, control, action, **params):
+        self.add_mapping(MouseControl(control, **params), action)
 
     def add_key_mapping(self, control, action):
         self.add_mapping(KeyControl(control), action)
