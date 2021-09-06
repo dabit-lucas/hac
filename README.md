@@ -26,8 +26,8 @@ A human action controller running on different platforms.
 |:------------------:|:----------------:|:--------:|:-------:|
 | PC / Win10 |  Mouse Control   |    V     |         |
 | PC / Win10 | Keyboard Control |    V     |         |
-| PC / Ubuntu | Mouse Control |         |         |
-| PC / Ubuntu | Keyboard Control |         |         |
+| PC / Ubuntu | Mouse Control |    V     |         |
+| PC / Ubuntu | Keyboard Control |     V    |         |
 
 ## Getting started
 
@@ -39,7 +39,7 @@ $ pip install pyhac
 ```
 $ git clone https://github.com/dabit-lucas/hac.git
 $ cd hac
-$ python demo.py
+$ python demo_mouse_control_fast_slow.py
 ```
 
 ### Recording custom actions
@@ -53,13 +53,14 @@ Here is an example of a config file of action set,
 ```
 {
     "actions": [
-        "r_five",
         "r_zero",
-        "l_five",
+        "r_one",
+        "r_five",
         "l_zero",
+        "l_one",
+        "l_five",
         "two_index_fingers_up",
         "two_index_fingers_down",
-        "33",
         "55",
         "sit"
     ],
@@ -72,20 +73,31 @@ $ python train.py --conf {path_of_action} --model_name {name_of_model}
 ```
 The generated model will become a module. Take mouse control module as an exmaple, it can create mappings among actions and controls by the following code:
 ```
-mouse_module = hac.add_module("mouse_control")
+# add predefined modules
+mouse_module = hac.add_module("mouse_control_fast_slow")
 hac.set_init_module(mouse_module)
 
 # create mapping between controls and actions
+mouse_module.add_mouse_mapping("mouse_left_down", ["r_one", "r_zero"])
+mouse_module.add_mouse_mapping("mouse_left_up", "r_one")
 mouse_module.add_mouse_mapping("mouse_left_down", ["r_five", "r_zero"])
 mouse_module.add_mouse_mapping("mouse_left_up", "r_five")
+
+mouse_module.add_mouse_mapping("mouse_right_down", ["l_one", "l_zero"])
+mouse_module.add_mouse_mapping("mouse_right_up", "l_one")
 mouse_module.add_mouse_mapping("mouse_right_down", ["l_five", "l_zero"])
 mouse_module.add_mouse_mapping("mouse_right_up", "l_five")
-mouse_module.add_mouse_mapping("right_move_diff", ["r_five", "r_five"])
-mouse_module.add_mouse_mapping("right_move_diff", ["r_zero", "r_zero"])
-mouse_module.add_mouse_mapping("left_move_diff", ["l_five", "l_five"])
-mouse_module.add_mouse_mapping("left_move_diff", ["l_zero", "l_zero"])
+
+mouse_module.add_mouse_mapping("right_move_diff", ["r_zero", "r_zero"], sensitivity_factor=2.0)
+mouse_module.add_mouse_mapping("right_move_diff", ["r_one", "r_one"], sensitivity_factor=4.0)
+mouse_module.add_mouse_mapping("right_move_diff", ["r_five", "r_five"], sensitivity_factor=1.0)
+
+mouse_module.add_mouse_mapping("left_move_diff", ["l_zero", "l_zero"], sensitivity_factor=2.0)
+mouse_module.add_mouse_mapping("left_move_diff", ["l_one", "l_one"], sensitivity_factor=4.0)
+mouse_module.add_mouse_mapping("left_move_diff", ["l_five", "l_five"], sensitivity_factor=1.0)
+
 mouse_module.add_mouse_mapping("roll_up", "two_index_fingers_up")
-mouse_module.add_mouse_mapping("roll_down", "two_index_fingers_down") 
+mouse_module.add_mouse_mapping("roll_down", "two_index_fingers_down")
 ```
 If the `five` gesture with a right hand shows in consecutive two frames `["r_five", "r_five"]`, then do control `right_move_diff`, which means moving the mouse cursor. The above description can be represented by the following code:
 ```
