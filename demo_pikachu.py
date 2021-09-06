@@ -5,15 +5,7 @@ import sys
 import signal
 import argparse
 
-def signal_handler(sig, frame):
-    global hac
-    hac.release_all()
-    sys.exit(0)
-
 if __name__ == "__main__":
-
-    # release all keys and mouse after interruption
-    signal.signal(signal.SIGINT, signal_handler)
 
     # add predefined modules
     mouse_module = hac.add_module("pikachu")
@@ -73,3 +65,4 @@ if __name__ == "__main__":
         count += 1
 
     cap.release()
+    cv2.destroyAllWindows()
