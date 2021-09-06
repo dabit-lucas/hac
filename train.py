@@ -223,4 +223,5 @@ if __name__ == "__main__":
         k_fold_val_losses.append(val_losses)
         k_fold_val_accs.append(val_accs)
         
+        # only train once when generating model for a real usage
         break

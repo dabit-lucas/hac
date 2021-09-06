@@ -120,12 +120,10 @@ class MouseControl:
 
     @property
     def sensitivity_factor(self):
-        print("getter")
         return self._sensitivity_factor
 
     @sensitivity_factor.setter
     def sensitivity_factor(self, sensitivity_factor):
-        print("setter")
         self._sensitivity_factor = sensitivity_factor
 
 class KeyControl:

@@ -38,19 +38,27 @@ class HAC:
         """
         self.holistic_tracker = holistic_tracker
 
-    def add_module(self, module_name):
+    def add_module(self, model_name, module_name=""):
         """
         Add an module to HAC.
         
         inputs: 
-            module_name: a module contains a set of actions which can be detected by a detector.
+            model_name: a module contains a set of actions which can be detected by a detector.
         """
+
+        if module_name == "":
+            module_name = model_name
+
         model_data_path = os.path.join("pyhac", "trained_model", "gcn", \
-                                        module_name, "best_model.pth")
+                                        model_name, "best_model.pth")
         device = "cuda" if torch.cuda.is_available() else "cpu"
         model_data = torch.load(model_data_path, map_location=device)
         detector = Detector(model_data)
-        module = Module(detector)
+        module = Module(module_name, detector)
+
+        if module_name in self.modules:
+            raise KeyError(f"module_name: {module_name} exists!")
+
         self.modules[module_name] = module
 
         return module
@@ -131,8 +139,10 @@ class HAC:
         if not self.controls[-1]:
             return
 
-        if isinstance(self.controls[-1], Module):
+        if isinstance(self.controls[-1], Module): # Transition
             self.module = self.controls[-1]
+            self.module.reset()
+            print(f"Transit to module: {self.module.name}")
         else:
             if self.controls[-1].execute:
                 self.controls[-1].execute()

@@ -73,7 +73,6 @@ if __name__ == "__main__":
                 ts = count / fps
 
             hac.update(image, ts, keep_data=args.keep_data)
-            hac.execute()
 
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -90,6 +89,7 @@ if __name__ == "__main__":
             if record:
                 if t is None:                
                     t = threading.Thread(target=timer, daemon=True, args=(record_time,))
+                    t.daemon = True
                     t.start()
                 hac.save(csv_path, image_dir, 0)
 
@@ -106,7 +106,12 @@ if __name__ == "__main__":
             break
 
         count += 1
+    
     cap.release()
+    cv2.destroyAllWindows()
 
     if args.keep_data:
         hac.save_images()
+
+    print("Finish!")
+

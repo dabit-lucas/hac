@@ -5,37 +5,40 @@ import sys
 import signal
 import argparse
 
-def signal_handler(sig, frame):
-    global hac
-    hac.release_all()
-    sys.exit(0)
-
 if __name__ == "__main__":
 
-    # release all keys and mouse after interruption
-    signal.signal(signal.SIGINT, signal_handler)
-
     # add predefined modules
-    mouse_module = hac.add_module("mouse_control")
+    mouse_module = hac.add_module("mouse_control_fast_slow")
     hac.set_init_module(mouse_module)
 
     # create mapping between controls and actions
+    mouse_module.add_mouse_mapping("mouse_left_down", ["r_one", "r_zero"])
+    mouse_module.add_mouse_mapping("mouse_left_up", "r_one")
     mouse_module.add_mouse_mapping("mouse_left_down", ["r_five", "r_zero"])
     mouse_module.add_mouse_mapping("mouse_left_up", "r_five")
+    
+    mouse_module.add_mouse_mapping("mouse_right_down", ["l_one", "l_zero"])
+    mouse_module.add_mouse_mapping("mouse_right_up", "l_one")
     mouse_module.add_mouse_mapping("mouse_right_down", ["l_five", "l_zero"])
     mouse_module.add_mouse_mapping("mouse_right_up", "l_five")
-    mouse_module.add_mouse_mapping("right_move_diff", ["r_five", "r_five"], sensitivity_factor=4.0)
-    mouse_module.add_mouse_mapping("right_move_diff", ["r_zero", "r_zero"], sensitivity_factor=4.0)
-    mouse_module.add_mouse_mapping("left_move_diff", ["l_five", "l_five"])
-    mouse_module.add_mouse_mapping("left_move_diff", ["l_zero", "l_zero"])
+
+    mouse_module.add_mouse_mapping("right_move_diff", ["r_zero", "r_zero"], sensitivity_factor=2.0)
+    mouse_module.add_mouse_mapping("right_move_diff", ["r_one", "r_one"], sensitivity_factor=4.0)
+    mouse_module.add_mouse_mapping("right_move_diff", ["r_five", "r_five"], sensitivity_factor=1.0)
+
+    mouse_module.add_mouse_mapping("left_move_diff", ["l_zero", "l_zero"], sensitivity_factor=2.0)
+    mouse_module.add_mouse_mapping("left_move_diff", ["l_one", "l_one"], sensitivity_factor=4.0)
+    mouse_module.add_mouse_mapping("left_move_diff", ["l_five", "l_five"], sensitivity_factor=1.0)
+
     mouse_module.add_mouse_mapping("roll_up", "two_index_fingers_up")
     mouse_module.add_mouse_mapping("roll_down", "two_index_fingers_down")   
-
+    
+    camera_id = 2
     # opencv get images from a webcam
     if sys.platform.startswith("win"):
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(camera_id, cv2.CAP_DSHOW)
     else:
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(camera_id)
 
     factor = 1080 / 1920
     ui_factor = 1
@@ -59,6 +62,8 @@ if __name__ == "__main__":
         image.flags.writeable = False
 
         ts = time.time() - t_start
+
+        image = cv2.GaussianBlur(image, (13, 13), 0)
         # detect actions
         hac.update(image, ts)
         # execute controls
@@ -79,3 +84,4 @@ if __name__ == "__main__":
         count += 1
 
     cap.release()
+    cv2.destroyAllWindows()

@@ -71,3 +71,4 @@ if __name__ == "__main__":
         count += 1
 
     cap.release()
+    cv2.destroyAllWindows()

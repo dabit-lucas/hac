@@ -3,15 +3,14 @@ from .control import MouseControl, KeyControl
 
 class Module:
 
-    mapping = {}
-    actions = deque()
-    dfs = deque()
-    max_data_len = 60
-    max_action_len = 1
-    detector = None
-
-    def __init__(self, detector):
+    def __init__(self, name, detector):
+        self.name = name
         self.detector = detector
+        self.mapping = {}
+        self.actions = deque()
+        self.dfs = deque()
+        self.max_data_len = 60
+        self.max_action_len = 1
         
     def add_mapping(self, control, actions):
         if isinstance(actions, str):
@@ -46,7 +45,7 @@ class Module:
                                  len(self.actions))]
             actions_str = str(actions)
             if actions_str in self.mapping:
-                control = self.mapping[actions_str]
+                control = self.mapping[actions_str] # control can be a module to transit between modules
                 
                 if hasattr(control, "method_name") and "move_diff" in control.method_name:
                     if control.method_name == "right_move_diff":
@@ -74,3 +73,8 @@ class Module:
         self.dfs.append(df)
         if len(df) > self.max_data_len:
             self.dfs.pop_left()
+
+    def reset(self):
+        self.actions = deque()
+        self.dfs = deque()
+        
