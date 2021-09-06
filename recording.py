@@ -111,6 +111,7 @@ if __name__ == "__main__":
     cv2.destroyAllWindows()
 
     if args.keep_data:
+        print("Saving images...")
         hac.save_images()
 
     print("Finish!")

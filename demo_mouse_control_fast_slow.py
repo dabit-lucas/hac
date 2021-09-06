@@ -63,7 +63,6 @@ if __name__ == "__main__":
 
         ts = time.time() - t_start
 
-        image = cv2.GaussianBlur(image, (13, 13), 0)
         # detect actions
         hac.update(image, ts)
         # execute controls

@@ -1,3 +1,4 @@
+import cv2
 import threading
 import time
 import mouse
@@ -90,8 +91,11 @@ class HAC:
         if self.tss and self.tss[-1] == ts:
             return
 
+        # Alleviate jittering detection result
+        image_blur = cv2.GaussianBlur(image, (7, 7), 0)
+
         # capture the skeleton from an image
-        skeleton = self.holistic_tracker(image, ts)
+        skeleton = self.holistic_tracker(image_blur, ts)
         
         if keep_data:
             control = None
